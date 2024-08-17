@@ -81,7 +81,7 @@ System({
     type: "info"
 }, async (message, match) => {
     if (match === "cmd") return;
-    let menu = "\nمصنوع من🤍\n\n";
+    let menu = "\n👻👀\n\n";
     let cmnd = plugins.commands.filter(command => !command.dontAddCommandList && command.pattern);
     cmnd = cmnd.map(command => ({
         cmd: command.pattern.toString().match(/(\W*)([A-Za-züşiğ öç1234567890]*)/)[2],
@@ -93,7 +93,7 @@ System({
     });
     if (MEDIA_DATA) {
         const [title, body, thumbnail] = MEDIA_DATA.split(";");
-        await message.client.sendMessage(message.jid, { text: menu, contextInfo: { externalAdReply: { title, body, thumbnailUrl: thumbnail, renderLargerThumbnail: true, mediaType: 1, mediaUrl: '', sourceUrl: "https://github.com/Loki-Xer/Jarvis-md", showAdAttribution: true } } });
+        await message.client.sendMessage(message.jid, { text: menu, contextInfo: { externalAdReply: { title, body, thumbnailUrl: thumbnail, renderLargerThumbnail: true, mediaType: 1, mediaUrl: '', sourceUrl: "https://instagram.com/_munavir._", showAdAttribution: true } } });
     } else {
         await message.send(menu);
     }
