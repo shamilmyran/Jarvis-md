@@ -59,7 +59,7 @@ System({
     type: "server",
     desc: "Show which platform you delpoyed",
 }, async (m, match) => {
-    m.reply("_*" + "You ara delpoyed on " + m.client.server + "*_");
+    m.reply("_*" + "You are delpoyed on " + m.client.server + "*_");
 });
 
 System({
@@ -67,7 +67,7 @@ System({
     fromMe: true,
     type: "server",
     desc: "Delete environment variable",
-}, async (message, match) => {
+}, async (message, match, m) => {
     const server = message.client.server;
     if (!match) return await message.reply("_Example: delvar sudo_");
     const key = match.trim().toUpperCase();
@@ -81,7 +81,7 @@ System({
     } else if (server === "RAILWAY") {
       await m.reply(`*${server} can't change variable, change it manually*`);
     } else {
-      const env = await changeVar(key.toUpperCase(), null);
+      const env = await changeVar(key.toUpperCase(), "");
       if (!env) return m.reply("*Error in deleted variable*");  
       await setData(key.toUpperCase(), null, false, "vars");
       await m.reply(`_*deleted var ${key.toUpperCase()}*_`);
@@ -253,7 +253,7 @@ System({
   type: "server",
 }, async (message) => {
   await message.send("_*Restarting*_");
-  message.client.server === "HEROKU" ? await herokuRestart(message) : await shell("pm2 restart jarvis");
+  message.client.server === "HEROKU" ? await herokuRestart(message) : await shell("pm2 restart Jarvis-md");
 });
 
 System({

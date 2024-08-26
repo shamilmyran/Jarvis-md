@@ -29,13 +29,17 @@ const gitPull = async (m) => {
                             m.reply("*Failed to install npm packages!*");
                             reject(error);
                         } else {
-                            m.reply("Installed npm packages successfully.");
+                            m.reply("*Installed npm packages successfully..!*");
                             resolve();
                         }
                     });
                 });
-            }
-            return m.reply("*Updated the bot with latest changes.*");
+            };
+            if(m.client.server === "REPLIT") {
+                return m.reply("_*Bot is updated restart your application manually*_");
+            } else {
+                return m.reply("*Updated the bot with latest changes.*");
+            };
         } else {
             return m.reply("*Bot is already working on the latest version.*");
         }
@@ -61,7 +65,7 @@ const redeploy = async () => {
         const { data } = await axios.get(`https://app.koyeb.com/v1/services`, axiosConfig);
         if (!data.services.length) throw new Error("No services found.");
         await axios.post(`https://app.koyeb.com/v1/services/${data.services[0].id}/redeploy`, { "deployment_group": "prod" }, axiosConfig);
-        return '_Update started._';
+        return '_*Update started..!*_';
     } catch (error) {
         return '*Error redeploying.*\n*Ensure KOYEB_API key is properly set.*\n_E.g.: KOYEB_API: api key from https://app.koyeb.com/account/api ._';
     }
