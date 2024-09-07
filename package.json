@@ -5,7 +5,8 @@
     "main": "index.js",
     "scripts": {
         "start": "pm2 start . --attach --name Jarvis-md",
-        "stop": "pm2 stop Jarvis-md"
+        "stop": "pm2 stop Jarvis-md",
+        "postinstall": "yarn global add pm2"
     },
     "dependencies": {
         "@adiwajshing/keyed-db": "^0.2.4",
@@ -13,7 +14,7 @@
         "@ffmpeg-installer/linux-x64": "^4.1.0",
         "@hapi/boom": "^10.0.1",
         "translate-google-api": "^1.0.4",
-        "@whiskeysockets/baileys": "git+https://github.com/Loki-Xer/Baileys.git",
+        "@whiskeysockets/baileys": "Loki-Xer/Baileys#bc838b38aed3d83b23ece6bd97851d435c08f515",
         "awesome-phonenumber": "^6.4.0",
         "axios": "^1.7.3",
         "browser-id3-writer": "^4.4.0",
@@ -39,7 +40,6 @@
         "sequelize": "^6.21.4",
         "simple-git": "^3.20.0",
         "sqlite3": "^5.0.11",
-        "util": "^0.12.5",
         "wa-sticker-formatter": "^4.3.2"
     }
 }
