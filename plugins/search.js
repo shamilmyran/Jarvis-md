@@ -10,7 +10,7 @@ Jarvis - Loki-Xer
 ------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 
-const { System, IronMan, isPrivate, getJson } = require("../lib/");
+const { System, IronMan, isPrivate, getJson, Google } = require("../lib/");
 
 
 System({
@@ -19,7 +19,7 @@ System({
     desc: 'Instagram profile details',
     type: 'search',
 }, async (message, match) => {
-    if (!match) return await message.send("*Need a username*\n_Example: .ig sedboy.am_");
+    if (!match) return await message.reply("*Need a username*\n_Example: .ig sedboy.am_");
     const data = await getJson(IronMan(`ironman/igstalk?id=${match}`));
     let caption = '';
     if (data.name) caption += `*𖢈ɴᴀᴍᴇ:* ${data.name}\n`;
@@ -39,22 +39,22 @@ System({
 });
 
 System({
-        pattern: "google ?(.*)",
-        fromMe: isPrivate,
-        desc: "Google search",
-        type: "search"
-}, async (message, match) => {
-        if (!match) return await message.send("*Need a query to search*\n_Example: who is iron man_");
-        const results = await getJson(IronMan(`ironman/s/google/search?q=${match}`));    
-            let resultText = ` Results of ${match} \n━━━───────────━━━\n`;
-            results.forEach((result, index) => {
-                const title = result.title;
-                const snippet = result.snippet;
-                const link = result.link;
-
-                resultText += ` *title*: ${title}\n*description*: ${snippet}\n*url*: ${link}\n━━━───────────━━━\n\n`;
-            });
-            await message.send(resultText);   
+    pattern: 'google ?(.*)',
+    fromMe: isPrivate,
+    desc: 'Searches Google',
+    type: 'search',
+}, async (message, match, m) => {
+    if (!match) return await message.reply("*Need a query to search*\n_Example: who is iron man_");
+    const query = match;
+    const results = await Google(query);
+    let response = '';
+    results.forEach((result, i) => {
+        response += `━━━──────${i + 1}─────━━━\n`;
+        response += `*TITLE:* ${result.title}\n`;
+        response += `*LINK:* ${result.link}\n`;
+        response += `*DESCRIPTION:* ${result.description}\n\n`;
+    });
+    await message.send(response, { quoted: message.data });
 });
 
 System({
@@ -75,7 +75,7 @@ System({
         desc: "SoundCloud search",
         type: "search"
 }, async (message, match) => {
-        if (!match) return await message.send("*Need a query to search*\n_Example: .scs life waster_");
+        if (!match) return await message.reply("*Need a query to search*\n_Example: .scs life waster_");
         const fullResult = match.trim().startsWith("-full");
         const query = fullResult ? match.replace("-full", "").trim() : match.trim();
         const { result: results } = await getJson(IronMan(`ironman/s/soundcloud?query=${query}`));
@@ -248,7 +248,7 @@ System({
   desc: 'TikTok Stalk',
   type: 'search',
 }, async (message, match) => {
-  if (!match) return await message.send("Need a TikTok username");
+  if (!match) return await message.send("*Need a TikTok username*");
   const response = await fetch(IronMan(`ironman/stalk/tiktok?id=${encodeURIComponent(match)}`));
   const data = await response.json();
   const { user, stats } = data;

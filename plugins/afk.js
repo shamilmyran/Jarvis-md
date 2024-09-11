@@ -23,7 +23,9 @@ System({
 	on: 'all',
 	fromMe: false
 }, async (message, match) => {
-	if (!AFK.isAfk ||  message.fromMe)  return;
+	if(message.isBot) return;
+	if(message.fromMe) return;
+	if (!AFK.isAfk)  return;
 	if(!message.mention.isBotNumber && !message.reply_message.i && message.isGroup)  return;
 	if (message.mention.isBotNumber && message.isGroup) {
    	    await message.send('```This is a bot. My owner is not here at the moment```\n' +
@@ -66,6 +68,7 @@ System({
 	desc: 'away from keyboard'
 }, async (message, match) => {
 	if (AFK.isAfk) return;
+        if(message.isBot) return;
 	AFK.lastseen = Math.round((new Date()).getTime() / 1000);
 	if (match !== '') AFK.reason = match;
 	AFK.isAfk = true;
